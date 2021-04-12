@@ -33,7 +33,7 @@ object ServiceModule {
         audioAttributes: AudioAttributes,
     ) = SimpleExoPlayer.Builder(context).build().apply {
         setAudioAttributes(audioAttributes,true)
-        setHandleAudioBecomingNoisy(true)
+        setHandleAudioBecomingNoisy(true)//ex: if headphones are plugged in, music will be paused and user must press play again
     }
 
     @ServiceScoped

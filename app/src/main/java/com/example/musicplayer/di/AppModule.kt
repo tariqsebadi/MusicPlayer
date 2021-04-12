@@ -23,13 +23,12 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideGlideInstance(
+    fun provideGlideInstance( //dagger hilt will provide this instance for us
         @ApplicationContext context: Context
     ) = Glide.with(context).setDefaultRequestOptions( // creating the glide instance .with(context)
         RequestOptions()
-            .placeholder(R.drawable.ic_baseline_error_24)//change ic_IMG later
+            .placeholder(R.drawable.ic_baseline_error_24)
             .error(R.drawable.ic_baseline_error_24)
-            .diskCacheStrategy(DiskCacheStrategy.DATA)
-
+            .diskCacheStrategy(DiskCacheStrategy.DATA)//images cached with glide
     )
 }
