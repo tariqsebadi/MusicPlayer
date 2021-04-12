@@ -66,7 +66,7 @@ class MusicService : MediaBrowserServiceCompat() {
         clientUid: Int,
         rootHints: Bundle?
     ): BrowserRoot? {
-
+        TODO("Not yet implemented")
     }
 
     override fun onLoadChildren(//for a more brosable app, we need more here onLoadChildren
