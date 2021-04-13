@@ -2,6 +2,7 @@ package com.example.musicplayer.di
 
 import android.annotation.SuppressLint
 import android.content.Context
+import com.example.musicplayer.data.remote.MusicDatabase
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
@@ -21,6 +22,10 @@ object ServiceModule {
 
     @ServiceScoped
     @Provides
+    fun provideMusicDatabase() = MusicDatabase() //using this for firebaseMusic class constructor
+
+    @ServiceScoped
+    @Provides
     fun provideAudioAttributes() = AudioAttributes.Builder()
         .setContentType(C.CONTENT_TYPE_MUSIC)
         .setUsage(C.USAGE_MEDIA)
@@ -33,7 +38,7 @@ object ServiceModule {
         audioAttributes: AudioAttributes,
     ) = SimpleExoPlayer.Builder(context).build().apply {
         setAudioAttributes(audioAttributes,true)
-        setHandleAudioBecomingNoisy(true)
+        setHandleAudioBecomingNoisy(true)//ex: if headphones are plugged in, music will be paused and user must press play again
     }
 
     @ServiceScoped

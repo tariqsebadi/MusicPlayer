@@ -12,10 +12,11 @@ class MusicDatabase {
     private val firestore = FirebaseFirestore.getInstance()
     private val songCollection = firestore.collection(SONG_COLLECTION)
 
-    //coroutine suspend keyword marks the function as suspendable, asynchronous option
+    //coroutine "suspend keyword" marks the function as suspendable, asynchronous option
+    //this functions gets our songs in a couroutine
     suspend fun getAllSongs(): List<Song>{
-        return try {
-            songCollection.get().await().toObjects(Song::class.java)
+        return try {//get, gets songs, await, makes the .get() network call a suspend function and returns object type "any"
+            songCollection.get().await().toObjects(Song::class.java)//turn any int object Song, otherwise catch = return empty
         }
         catch (e: Exception){
             emptyList()
