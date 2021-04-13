@@ -6,6 +6,7 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaSessionCompat
 
 import androidx.media.MediaBrowserServiceCompat
+import com.example.musicplayer.exoplayer.callbacks.MusicPlayerNotificationListener
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
@@ -29,6 +30,8 @@ class MusicService : MediaBrowserServiceCompat() {
     @Inject
     lateinit var exoPlayer: SimpleExoPlayer
 
+    private lateinit var musicNotificationManager: MusicNotificationManager
+
     //services run on main thread, so we make this coroutine job plus scope it to deal with its cancelation
     //if service dies, coroutine dies = no memory leak
     private val serviceJob = Job()
@@ -37,6 +40,8 @@ class MusicService : MediaBrowserServiceCompat() {
     //these 2 are initialized in onCreate
     private lateinit var mediaSession: MediaSessionCompat
     private lateinit var mediaSessionConnector: MediaSessionConnector
+
+    var isForgroundSService = false
 
     override fun onCreate() {
         super.onCreate()
@@ -51,6 +56,14 @@ class MusicService : MediaBrowserServiceCompat() {
 
         //mediaSession comes with session token and takes properties of our extention MediaBrowserServiceCompat()
         sessionToken = mediaSession.sessionToken
+
+        musicNotificationManager = MusicNotificationManager(
+            this,
+            mediaSession.sessionToken,
+            MusicPlayerNotificationListener(this)
+        ){
+            //TODO update current song duration
+        }
 
         mediaSessionConnector = MediaSessionConnector(mediaSession)
         mediaSessionConnector.setPlayer(exoPlayer)//exoplayer is injected
