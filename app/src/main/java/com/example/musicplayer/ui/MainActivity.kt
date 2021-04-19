@@ -1,4 +1,4 @@
-package com.example.musicplayer.ui.viewmodels
+package com.example.musicplayer.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
