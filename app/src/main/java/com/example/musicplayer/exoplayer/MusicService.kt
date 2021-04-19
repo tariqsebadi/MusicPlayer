@@ -13,6 +13,7 @@ import com.example.musicplayer.exoplayer.callbacks.MusicPlaybackPreparer
 import com.example.musicplayer.exoplayer.callbacks.MusicPlayerEventListener
 import com.example.musicplayer.exoplayer.callbacks.MusicPlayerNotificationListener
 import com.example.musicplayer.other.Constants.MEDIA_ROOT_ID
+import com.example.musicplayer.other.Constants.NETWORK_ERROR
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
@@ -172,7 +173,9 @@ class MusicService : MediaBrowserServiceCompat() {
                             preparePlayer(firebaseMusicSource.songs, firebaseMusicSource.songs[0], false)
                             isPlayerInitialized = true
                         }
-                    } else {//if ready but not initialized, then an error occured
+                    } else {
+                        mediaSession.sendSessionEvent(NETWORK_ERROR,null)
+                        //if ready but not initialized, then an error occured
                         result.sendResult(null)//wont get any songs
                     }
                 }
