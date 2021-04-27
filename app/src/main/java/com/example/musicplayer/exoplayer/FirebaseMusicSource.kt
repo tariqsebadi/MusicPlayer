@@ -66,7 +66,7 @@ class FirebaseMusicSource @Inject constructor(
             .setIconUri(song.description.iconUri)
             .build()
         MediaBrowserCompat.MediaItem(description,FLAG_PLAYABLE)
-    }
+    }.toMutableList()
 
     //when we download our music from firebase, its in the bg thread, we need a way to know if its finished downloading
     //this list of lambda functions that tells us if its initialized or not
